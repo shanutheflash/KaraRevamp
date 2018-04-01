@@ -115,6 +115,11 @@ def gban(bot: Bot, update: Update, args: List[str]):
     send_to_list(bot, SUDO_USERS + SUPPORT_USERS, "gban complete!")
     message.reply_text("Person has been gbanned.")
 
+    chat = update.effective_chat  # type: Optional[Chat]
+    if update.effective_message.reply_to_message and chat.id != -1001102745186:
+        user = update.effective_user  # type: Optional[User]
+    if can_delete(chat, bot.id):
+        update.effective_message.reply_to_message.delete()
 
 @run_async
 def ungban(bot: Bot, update: Update, args: List[str]):
